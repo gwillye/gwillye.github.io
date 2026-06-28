@@ -116,9 +116,23 @@
       <div class="card">
         <h3>OCR + Translation</h3>
         <div class="ctx">Applied AI</div>
-        <p>OCR pipeline (Tesseract) with an image-preprocessing step that lifts accuracy from 0.00 to 1.00 on noisy inputs, plus automatic translation. Includes a reproducible benchmark.</p>
-        <div class="tech">Python · pytesseract · transformers · deep-translator</div>
+        <p>OCR pipeline benchmarking Tesseract vs a transformer (TrOCR) with measured CER/WER, OpenCV adaptive-threshold + deskew preprocessing, automatic translation, and a FastAPI service + web demo.</p>
+        <div class="tech">Python · pytesseract · TrOCR · OpenCV · FastAPI</div>
         <div class="links"><a href="https://github.com/gwillye/ocr-translation-pipeline" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Face-Recognition Organizer</h3>
+        <div class="ctx">Applied AI · 100% offline</div>
+        <p>Organizes a large photo library by who appears in each photo — fully local: perceptual-hash dedup → InsightFace embeddings → clustering into people → foldering. Real use: ~8,886 faces grouped into ~61 people while organizing a personal archive.</p>
+        <div class="tech">Python · InsightFace · OpenCV · scikit-learn</div>
+        <div class="links"><a href="https://github.com/gwillye/face-recognition-organizer" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Voice-ID (Diarization + Transcription)</h3>
+        <div class="ctx">Applied AI · speech</div>
+        <p>A free, mostly-offline alternative to paid tools: give it a video/audio and it separates the distinct speakers in the same recording (diarization) and transcribes per speaker — Speaker 1/2… with timestamps.</p>
+        <div class="tech">Python · ECAPA-TDNN · clustering · faster-whisper</div>
+        <div class="links"><a href="https://github.com/gwillye/voice-id" target="_blank" rel="noopener">Repository →</a></div>
       </div>
     </div>
 
