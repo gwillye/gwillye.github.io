@@ -1,88 +1,226 @@
 <!DOCTYPE html>
-<html lang="pt_br">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabriel Willye's Portfolio</title>
-    <!-- CSS do projeto-->
-    <link rel="stylesheet" href="css/styles.css">
-    <!-- Google Fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,700;0,900;1,300;1,700;1,900&display=swap" rel="stylesheet">
-    <!-- Dev Icon Fonts-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.15.1/devicon.min.css">    
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gabriel Willye — Data Scientist & AI Engineer</title>
+<meta name="description" content="Portfolio of Gabriel Willye — Data Scientist / AI Engineer. Real-world ML, AI agents and BI across government, finance and digital marketing." />
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --border:#272e3a; --txt:#e6edf3;
+    --muted:#9aa7b4; --accent:#58a6ff; --accent2:#3fb950; --chip:#1f2733;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:16px/1.6 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px}
+  header{padding:64px 0 28px;border-bottom:1px solid var(--border)}
+  header h1{font-size:2.4rem;letter-spacing:-.5px}
+  header .role{color:var(--accent);font-size:1.15rem;margin-top:6px;font-weight:600}
+  header .loc{color:var(--muted);margin-top:8px}
+  .contact{margin-top:18px;display:flex;flex-wrap:wrap;gap:14px}
+  .contact a{background:var(--chip);border:1px solid var(--border);padding:7px 14px;border-radius:8px;color:var(--txt);font-size:.92rem}
+  section{padding:38px 0;border-bottom:1px solid var(--border)}
+  h2{font-size:1.4rem;margin-bottom:14px}
+  h2 .em{color:var(--accent2)}
+  p.lead{color:var(--muted);max-width:760px}
+  .skills{margin-top:18px;display:flex;flex-wrap:wrap;gap:8px}
+  .skills span{background:var(--chip);border:1px solid var(--border);padding:4px 11px;border-radius:20px;font-size:.82rem;color:var(--muted)}
+  .group-title{margin:30px 0 14px;font-size:1.05rem;color:var(--accent2);text-transform:uppercase;letter-spacing:1px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;flex-direction:column}
+  .card h3{font-size:1.08rem;margin-bottom:6px}
+  .card .ctx{color:var(--accent2);font-size:.78rem;font-weight:600;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.9rem;flex:1}
+  .card .tech{margin-top:12px;font-size:.76rem;color:var(--muted)}
+  .card .links{margin-top:12px;display:flex;gap:12px;font-size:.85rem}
+  .badge{display:inline-block;font-size:.68rem;background:#3a2d0d;color:#e3b341;border:1px solid #5a4a18;padding:2px 8px;border-radius:20px;margin-left:6px;vertical-align:middle}
+  footer{padding:34px 0 60px;color:var(--muted);font-size:.9rem;text-align:center}
+</style>
 </head>
 <body>
-    <main id="container">
-        <aside id="bio-container">
-            <h2> Gabriel Willye</h2>
-            <img src="img/Foto.jpg" alt="Foto de Gabriel Willye">
-            <p>My name is Gabriel Willye, I'm a <span class="highlight">Information System's student at UFMS</span>. I was intern at <span class="highlight"> Compass UOL</span> and now I'm  <span class="highlight"> Market Intelligence Begginer in Macfor Full Marketing Digital</span>.</p>
-            <p id="welcome-text"> Welcome!</p>
-            <ul id="social-container">
-             <li><a href="https://github.com/gwillye" target="_blank"><ion-icon name="logo-github"></ion-icon></a></li>
-             <li><a href="https://www.linkedin.com/in/gabrielwillye/" target="_blank"><ion-icon name="logo-linkedin"></ion-icon></a></li>
-             <li><a href="https://api.whatsapp.com/send/?phone=%2B55067991349936&text&type=phone_number&app_absent=0" target="_blank"><ion-icon name="logo-whatsapp"></ion-icon></a></li>
-            </ul>
-            <div id="email-container">
-                <ion-icon name="mail-outline"></ion-icon>
-                <a href="mailto:gwillyestudante@gmail.com">gwillyestudante@gmail.com</a>
-            </div>
-        </aside>
-        <section id="about-container">
-            <h1 id="name">Gabriel Willye</h1>
-            <p id="title"><span class="highlight">Estagiário em Data e Analytics</span></p>
-            <p class="description">My name is Gabriel Willye Borges Valençoela, I'm 20 years old and from Campo Grande, MS, Brazil. I was <span class="highlight">an intern in the Data&Analytics area at Compass UOL</span>, and I'm in the <span class="highlight">fifth semester of Information Systems at UFMS</span>. I am currently <span class="highlight">Market Intelligence Begginer I at Macfor Full Marketing Digital</span>.</p>
-             <p class="description">I am currently studying to pursue a career in the area of Data Science or Business Intelligence.</p>
-            <p> I have knowledge in data visualization using PowerBI, Looker and experience with AWS Quicksight.
-I also have knowledge with AWS tools (Glue, Lambda, S3, Athena), intermediate Office suite (Excel, Word, Power Point) and Google tools (Sheets, Slides, Drive, Docs, Calendar). I work as a freelancer on the Fiverr platform developing analyzes with Digital Marketing KPIs, and I work with Digital Marketing diagnostics at Macfor.</p>
-            <a href="https://github.com/gwillye" id="btn-projects"><ion-icon name="share-social-outline"></ion-icon><span>My Projects</span></a>
-            <a href="https://www.canva.com/design/DAF2ICzbCsM/TEGz52HZQkjqUCu2YL1ebA/edit?utm_content=DAF2ICzbCsM&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" id="btn-projects"><ion-icon name="share-social-outline"></ion-icon><span>My curriculum</span></a>
+<header>
+  <div class="wrap">
+    <h1>Gabriel Willye</h1>
+    <div class="role">Data Scientist · AI Engineer · Machine Learning</div>
+    <div class="loc">📍 Campo Grande, MS, Brazil</div>
+    <div class="contact">
+      <a href="mailto:gwillyestudante@gmail.com">✉️ gwillyestudante@gmail.com</a>
+      <a href="https://www.linkedin.com/in/gabrielwillye" target="_blank" rel="noopener">in/gabrielwillye</a>
+      <a href="https://github.com/gwillye" target="_blank" rel="noopener">github.com/gwillye</a>
+    </div>
+  </div>
+</header>
 
-            <h2 id="skills-section-tittle">My Skills</h2>
-            <p class="description">Discover the technologies I study:</p>
-            <div id="skills-container">
-                <div class="skills-box">
-                    <p class="skills-title">Back End</p>
-                        <i class="devicon-java-plain colored"></i>
-                        <i class="devicon-python-plain colored"></i>
-                </div>
-                <div class="skills-box">
-                    <p class="skills-title">Databases</p>
-                        <i class="devicon-mysql-plain colored"></i>
-                        <i class="devicon-postgresql-plain colored"></i>
-                        <i class="devicon-sqlite-plain-wordmark colored"></i>
-                </div>
-                <div class="skills-box">
-                    <p class="skills-title">Data Engineering Tools</p>   
-                        <i class="devicon-apache-plain colored"></i>
-                        <i class="devicon-anaconda-original colored"></i>
-                        <i class="devicon-jupyter-plain-wordmark colored"></i>
-                </div>
-                <div class="skills-box">
-                    <p class="skills-title">Data Libraries</p>
-                        <i class="devicon-numpy-original-wordmark colored"></i>
-                        <i class="devicon-pandas-original-wordmark colored"></i>
-                </div>
-                <div class="skills-box">
-                    <p class="skills-title">Front End</p>
-                        <i class="devicon-css3-plain colored"></i>
-                        <i class="devicon-html5-plain colored"></i>
-                        <i class="devicon-javascript-plain colored"></i>
-                        <i class="devicon-react-plain colored"></i>
-                </div>
-                <div class="skills-box">
-                    <p class="skills-title">Tools</p>
-                        <i class="devicon-docker-plain colored"></i>
-                        <i class="devicon-git-plain colored"></i>
-                        <i class="devicon-ubuntu-plain colored"></i>
-                        <i class="devicon-amazonwebservices-plain colored"></i>
-                </div>
-            </div>
-        </section>
-    </main>
-    <!--Ion Icon-->
-    <script src="https://unpkg.com/ionicons@5.1.2/dist/ionicons.js"></script>
+<section id="about">
+  <div class="wrap">
+    <h2>About <span class="em">me</span></h2>
+    <p class="lead">
+      Data Scientist with 2 years of (fully remote) experience in <strong>machine learning, statistical modeling,
+      predictive analytics and data-workflow automation</strong>. I've shipped work across <strong>government,
+      finance and digital marketing</strong> — from an LLM fiscal-audit agent over 180M+ records to fraud-risk
+      scoring and BI pipelines that drove real business impact. BSc in Information Systems (UFMS), with an academic
+      track in applied AI. I blend technical depth with business strategy.
+    </p>
+    <div class="skills">
+      <span>Python</span><span>SQL</span><span>PySpark</span><span>Pandas</span><span>scikit-learn</span>
+      <span>TensorFlow</span><span>AWS</span><span>Google Cloud</span><span>Looker / Power BI</span>
+      <span>RAG & multi-agent</span><span>NLP</span><span>HDBSCAN / Random Forest</span><span>Docker</span>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <h2><span class="em">Projects</span></h2>
+    <p class="lead">Real-world and academic projects. Each links to its repository; live demos are added as they go online.</p>
+
+    <div class="group-title">AI / Machine Learning</div>
+    <div class="grid">
+      <div class="card">
+        <h3>Julgador</h3>
+        <div class="ctx">AZ Tecnologia · COTIN (gov. MS)</div>
+        <p>AI fiscal-audit agent (LLM + RAG + TensorFlow) that validates invoice NCM codes across 180M+ records — 84% accuracy inside the State Revenue pipeline.</p>
+        <div class="tech">Ollama Gemma 2 27B · RAG · TensorFlow · Python</div>
+        <div class="links"><a href="https://github.com/gwillye/Julgador" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>NCM Classifier</h3>
+        <div class="ctx">AZ Tecnologia · COTIN (gov. MS)</div>
+        <p>ML/RAG classifier for Brazilian NCM tax codes — the classification engine that feeds the Julgador audit agent in the State tax-fraud pipeline.</p>
+        <div class="tech">Python · ML · RAG · TensorFlow</div>
+        <div class="links"><a href="https://github.com/gwillye/cotin-ncm-classifier" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Asset-Risk Scoring</h3>
+        <div class="ctx">Neoway (B3 Group)</div>
+        <p>Composite asset-risk score flagging straw-man ("laranja") fraud without banking data, combining HDBSCAN clustering with Random Forest — 82% performance in the compliance pipeline.</p>
+        <div class="tech">HDBSCAN · Random Forest · Isolation Forest · scikit-learn</div>
+        <div class="links"><a href="https://github.com/gwillye/Perfil_Laranja" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>CNN-MNIST</h3>
+        <div class="ctx">Deep Learning</div>
+        <p>Convolutional neural networks (LeNet / AlexNet) for handwritten-digit recognition — a clean demonstration of CNN fundamentals.</p>
+        <div class="tech">TensorFlow / Keras · CNN · Python</div>
+        <div class="links"><a href="https://github.com/gwillye/CNN-MNIST" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Abalone Age Prediction</h3>
+        <div class="ctx">Data Science / ML</div>
+        <p>Regression pipeline predicting abalone age from physical measurements (R² 0.55), with a roadmap comparing non-linear models (RF, Gradient Boosting).</p>
+        <div class="tech">scikit-learn · pandas · matplotlib</div>
+        <div class="links"><a href="https://github.com/gwillye/regressao-abalone" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>OCR + Translation</h3>
+        <div class="ctx">Applied AI</div>
+        <p>OCR pipeline (Tesseract) with an image-preprocessing step that lifts accuracy from 0.00 to 1.00 on noisy inputs, plus automatic translation. Includes a reproducible benchmark.</p>
+        <div class="tech">Python · pytesseract · transformers · deep-translator</div>
+        <div class="links"><a href="https://github.com/gwillye/ocr-translation-pipeline" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+    </div>
+
+    <div class="group-title">Data Engineering / BI</div>
+    <div class="grid">
+      <div class="card">
+        <h3>Macfor Social Scraper</h3>
+        <div class="ctx">Macfor · Business Intelligence</div>
+        <p>Social-data collection component of a Python BI/ETL stack that powered 10 market studies and 25 diagnostics — ~25% less diagnosis time and +R$2M in contracts.</p>
+        <div class="tech">Python · BeautifulSoup · Pandas · Looker Studio</div>
+        <div class="links"><a href="https://github.com/gwillye/macfor-social-scraper" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Compass UOL Data Analytics <span class="badge">demo soon</span></h3>
+        <div class="ctx">Compass UOL · Cloud Data Engineering</div>
+        <p>End-to-end AWS data pipeline (API → PySpark/Lambda → S3 → QuickSight). Roadmap: an interactive Plotly dashboard hosted here as a live demo.</p>
+        <div class="tech">AWS · PySpark · Lambda · S3 · QuickSight · Docker</div>
+        <div class="links"><a href="https://github.com/gwillye/DataAnalytics_CompassUOL" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Stock Data Analysis</h3>
+        <div class="ctx">Data Science · B3</div>
+        <p>Collects Brazilian (B3) stock history via yfinance into SQLite, computes moving averages, visualizes with Plotly and forecasts with Prophet.</p>
+        <div class="tech">Python · yfinance · SQLite · Plotly · Prophet</div>
+        <div class="links"><a href="https://github.com/gwillye/stock-data-analysis" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+    </div>
+
+    <div class="group-title">Web & Applications</div>
+    <div class="grid">
+      <div class="card">
+        <h3>Filmow Desktop</h3>
+        <div class="ctx">Local web app</div>
+        <p>A Filmow-style movie catalog that runs locally (Flask + CLI), calls a free public movie API (TMDB, offline fallback) and organizes films into four lists — seen, want-to-see, rewatch, favorites.</p>
+        <div class="tech">Python · Flask · TMDB API · JSON store</div>
+        <div class="links"><a href="https://github.com/gwillye/filmow-desktop" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Doceria Web</h3>
+        <div class="ctx">React storefront</div>
+        <p>A confectionery storefront rebuilt as a Vite + React app — product catalog, order form and a cart with localStorage. Legacy HTML kept for comparison.</p>
+        <div class="tech">React · Vite · JavaScript</div>
+        <div class="links"><a href="https://github.com/gwillye/doceria-web" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Alexandria <span class="badge">improving</span></h3>
+        <div class="ctx">Java application</div>
+        <p>A personal media/library cataloguer written from scratch in Java — currently being refactored into a clean, bug-free version.</p>
+        <div class="tech">Java · OOP</div>
+        <div class="links"><a href="https://github.com/gwillye/Alexandria" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+    </div>
+
+    <div class="group-title">Portfolio Demos & Analytics</div>
+    <div class="grid">
+      <div class="card">
+        <h3>Demos-Repo</h3>
+        <div class="ctx">15 runnable demos</div>
+        <p>A collection of small, self-contained, actually-run DS/ML/NLP/algorithm demos — churn, RFM, recommender, sentiment, A/B testing, market-basket, forecasting, A* and more. Each runs end-to-end with metrics.</p>
+        <div class="tech">Python · scikit-learn · numpy · scipy</div>
+        <div class="links"><a href="https://github.com/gwillye/Demos-Repo" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>Kaggle-Analytics</h3>
+        <div class="ctx">10 distinct DS problems</div>
+        <p>Ten end-to-end analyses (classification, regression, clustering, NLP, time-series, recommendation, gov EDA, credit-risk) on real public datasets, structured to drop in Kaggle datasets. Scripts + Colab notebooks.</p>
+        <div class="tech">Python · scikit-learn · pandas · notebooks</div>
+        <div class="links"><a href="https://github.com/gwillye/Kaggle-Analytics" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>YouTube Watch-History Analyzer</h3>
+        <div class="ctx">Personal data science</div>
+        <p>Parses a YouTube Takeout watch history, ranks channels and classifies ~35k videos (AI + heuristics), cutting the "Other" bucket from 68% to 19.5%. Raw titles kept private; demo on aggregates.</p>
+        <div class="tech">Python · NLP · pandas</div>
+        <div class="links"><a href="https://github.com/gwillye/youtube-watch-history-analyzer" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+    </div>
+
+    <div class="group-title">Academic (UFMS)</div>
+    <div class="grid">
+      <div class="card">
+        <h3>UFMS Studies</h3>
+        <div class="ctx">BSc Information Systems</div>
+        <p>Consolidated coursework as one project-oriented repo: data structures (C/C++), databases lab (SQL + Docker), distributed computing (Flask MVC), web programming (React) and a quiz app.</p>
+        <div class="tech">C/C++ · SQL · Flask · React · Docker</div>
+        <div class="links"><a href="https://github.com/gwillye/UFMS_studies" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+      <div class="card">
+        <h3>PET Social Networks</h3>
+        <div class="ctx">PET Sistemas · UFMS research</div>
+        <p>Data-science research correlating social-media usage with psychometric scales (QSG-12) among Computing students — Pearson analysis across segments. Aggregate results only; individual responses withheld for privacy.</p>
+        <div class="tech">Python · pandas · statistics</div>
+        <div class="links"><a href="https://github.com/gwillye/pet-social-networks" target="_blank" rel="noopener">Repository →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Built with plain HTML/CSS · Hosted on GitHub Pages · © Gabriel Willye
+  </div>
+</footer>
 </body>
 </html>
