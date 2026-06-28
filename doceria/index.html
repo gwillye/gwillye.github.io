@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Doceria — storefront (demo)</title>
+<meta name="description" content="A small confectionery storefront — catalog, order form and a cart that persists in your browser. Static client-side build of the React version; runs right here." />
+<style>
+  :root{--bg:#0d1117;--card:#161b22;--border:#272e3a;--txt:#e6edf3;--muted:#9aa7b4;--accent:#ff7eb6;--accent2:#3fb950;--chip:#1f2733}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  .nav{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;max-width:1000px;margin:0 auto;padding:18px}
+  .brand{font-size:1.3rem;font-weight:700}
+  .nav nav{display:flex;gap:8px;flex-wrap:wrap}
+  .nav button{cursor:pointer;font-family:inherit;background:var(--chip);border:1px solid var(--border);color:var(--txt);padding:7px 13px;border-radius:8px;font-size:.88rem}
+  .nav button.active{background:var(--accent);color:#3a0f25;border-color:var(--accent);font-weight:700}
+  .back{font-size:.82rem;color:var(--muted)}
+  .container{max-width:1000px;margin:0 auto;padding:8px 18px 60px}
+  .hero{background:linear-gradient(135deg,#2a1622,#161b22);border:1px solid var(--border);border-radius:16px;padding:34px;text-align:center;margin:14px 0}
+  .hero h1{font-size:2rem;letter-spacing:-.5px}
+  .hero p{color:var(--muted);margin:10px auto 18px;max-width:560px}
+  .btn{cursor:pointer;font-family:inherit;background:var(--accent);color:#3a0f25;border:0;padding:10px 18px;border-radius:10px;font-weight:700}
+  .btn.green{background:var(--accent2);color:#04210f}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin:16px 0}
+  .prod{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .prod .img{aspect-ratio:4/3;background:#0a0e14 center/cover no-repeat}
+  .prod .b{padding:12px;display:flex;flex-direction:column;flex:1}
+  .prod .nm{font-weight:700}
+  .prod .ds{color:var(--muted);font-size:.84rem;margin:4px 0 10px;flex:1}
+  .prod .pr{font-weight:700;color:var(--accent2);margin-bottom:8px}
+  .cartrow{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+  .cartrow button{cursor:pointer;background:#3a1620;color:#f7a8c8;border:1px solid #5a2233;border-radius:7px;padding:3px 9px;font-size:.8rem}
+  .qty{display:inline-flex;gap:6px;align-items:center}
+  .qty button{background:var(--chip);border:1px solid var(--border);color:var(--txt);width:26px;height:26px;border-radius:6px;cursor:pointer}
+  label{display:block;margin:10px 0 4px;font-size:.86rem;color:var(--muted)}
+  input,textarea{width:100%;background:var(--chip);border:1px solid var(--border);color:var(--txt);padding:9px 12px;border-radius:8px;font-family:inherit}
+  .total{font-size:1.15rem;font-weight:700;margin:14px 0}
+  .ok{background:#0f2a17;border:1px solid #1f5a32;color:#7ee2a2;padding:12px;border-radius:10px;margin-top:12px}
+  .muted{color:var(--muted)}
+  .foot{text-align:center;color:var(--muted);font-size:.82rem;padding:24px;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<div class="nav">
+  <span class="brand">🧁 Doceria</span>
+  <nav id="nav">
+    <a class="back" href="../index.html">← portfolio</a>
+    <button data-v="home" class="active">Início</button>
+    <button data-v="catalog">Produtos</button>
+    <button data-v="order">Pedido (<span id="count">0</span>)</button>
+  </nav>
+</div>
+<main class="container" id="main"></main>
+<div class="foot">Static client-side build of the React storefront · cart persists in your browser · <a href="../index.html">@gwillye</a></div>
+
+<script>
+const products = [
+  {id:1,name:'Bolo de Chocolate',price:45,image:'Cake.jpg',desc:'Massa fofinha com cobertura cremosa de chocolate.'},
+  {id:2,name:'Bolo Red Velvet',price:55,image:'Cake.jpg',desc:'Clássico aveludado com cream cheese.'},
+  {id:3,name:'Cupcakes (caixa com 6)',price:30,image:'150.jpg',desc:'Seis cupcakes sortidos do dia.'},
+  {id:4,name:'Torta de Morango',price:60,image:'150.jpg',desc:'Morangos frescos e chantilly.'},
+];
+let cart = JSON.parse(localStorage.getItem('doceria_cart')||'{}'); // {id: qty}
+let view = 'home';
+const main = document.getElementById('main');
+const brl = v => 'R$ '+v.toFixed(2).replace('.',',');
+function save(){ localStorage.setItem('doceria_cart', JSON.stringify(cart)); count(); }
+function count(){ document.getElementById('count').textContent = Object.values(cart).reduce((a,b)=>a+b,0); }
+function add(id){ cart[id]=(cart[id]||0)+1; save(); if(view==='order') render(); }
+function setq(id,d){ cart[id]=(cart[id]||0)+d; if(cart[id]<=0) delete cart[id]; save(); render(); }
+
+function render(){
+  if(view==='home'){
+    main.innerHTML = `<div class="hero"><h1>Doces feitos com carinho 🧁</h1>
+      <p>Bolos, tortas e cupcakes fresquinhos. Monte seu pedido e a gente prepara.</p>
+      <button class="btn" onclick="go('catalog')">Ver produtos</button></div>`;
+  } else if(view==='catalog'){
+    main.innerHTML = `<h2 style="margin:14px 0">Nossos produtos</h2><div class="grid">`+
+      products.map(p=>`<div class="prod"><div class="img" style="background-image:url('${p.image}')"></div>
+        <div class="b"><div class="nm">${p.name}</div><div class="ds">${p.desc}</div>
+        <div class="pr">${brl(p.price)}</div>
+        <button class="btn green" onclick="add(${p.id})">Adicionar ao pedido</button></div></div>`).join('')+`</div>`;
+  } else {
+    const ids = Object.keys(cart);
+    if(!ids.length){ main.innerHTML = `<h2 style="margin:14px 0">Seu pedido</h2><p class="muted">Carrinho vazio. <a href="#" onclick="go('catalog');return false">Ver produtos →</a></p>`; return; }
+    let total=0;
+    const rows = ids.map(id=>{ const p=products.find(x=>x.id==id); const q=cart[id]; total+=p.price*q;
+      return `<div class="cartrow"><div><strong>${p.name}</strong><div class="muted">${brl(p.price)}</div></div>
+        <div class="qty"><button onclick="setq(${id},-1)">−</button>${q}<button onclick="setq(${id},1)">+</button>
+        <button onclick="setq(${id},-${q})">remover</button></div></div>`; }).join('');
+    main.innerHTML = `<h2 style="margin:14px 0">Seu pedido</h2>${rows}<div class="total">Total: ${brl(total)}</div>
+      <form id="f"><label>Nome</label><input required placeholder="Seu nome" />
+      <label>Telefone / WhatsApp</label><input required placeholder="(67) 9....." />
+      <label>Endereço de entrega</label><textarea rows="2" placeholder="Rua, número, bairro"></textarea>
+      <label>Observações</label><textarea rows="2" placeholder="Ex.: sem lactose, recado no bolo..."></textarea>
+      <div style="margin-top:14px"><button class="btn green" type="submit">Enviar pedido</button></div>
+      <div id="done"></div></form>`;
+    document.getElementById('f').onsubmit = e=>{ e.preventDefault();
+      document.getElementById('done').innerHTML = `<div class="ok">✅ Pedido registrado (demo)! Total ${brl(total)}. Numa loja real isto iria pro WhatsApp/painel da doceria.</div>`;
+      cart={}; save(); };
+  }
+  document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active', b.dataset.v===view));
+}
+function go(v){ view=v; render(); }
+document.querySelectorAll('#nav button').forEach(b=> b.onclick=()=>go(b.dataset.v));
+count(); render();
+</script>
+</body>
+</html>
