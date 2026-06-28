@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Meu Catálogo de Filmes — Filmow-style (local)</title>
+<meta name="description" content="A local, Filmow-style movie catalog: search a free public movie API (TMDB) and organize films into four lists — seen, want-to-see, rewatch, favorites. Runs fully client-side; your lists live in your browser." />
+<style>
+  :root{
+    --bg:#0d1117; --card:#161b22; --border:#272e3a; --txt:#e6edf3;
+    --muted:#9aa7b4; --accent:#58a6ff; --accent2:#3fb950; --chip:#1f2733; --warn:#e3b341;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:15px/1.55 -apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 18px}
+  header{padding:30px 0 14px;border-bottom:1px solid var(--border)}
+  header h1{font-size:1.7rem;letter-spacing:-.5px}
+  header p{color:var(--muted);margin-top:6px;font-size:.92rem}
+  header .back{font-size:.85rem}
+  .keybar{margin:14px 0;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .keybar input{flex:1;min-width:220px;background:var(--chip);border:1px solid var(--border);color:var(--txt);padding:9px 12px;border-radius:8px;font-size:.9rem}
+  .keybar button,.tabs button,.card button{cursor:pointer;font-family:inherit}
+  .keybar button{background:var(--accent);color:#06203f;border:0;padding:9px 14px;border-radius:8px;font-weight:600;font-size:.9rem}
+  .keybar .hint{color:var(--muted);font-size:.78rem;width:100%}
+  .keybar .hint a{color:var(--accent)}
+  .searchbar{margin:8px 0 4px;display:flex;gap:8px}
+  .searchbar input{flex:1;background:var(--chip);border:1px solid var(--border);color:var(--txt);padding:11px 14px;border-radius:10px;font-size:1rem}
+  .searchbar button{background:var(--accent2);color:#04210f;border:0;padding:0 18px;border-radius:10px;font-weight:700}
+  .tabs{margin:18px 0 6px;display:flex;flex-wrap:wrap;gap:8px}
+  .tabs button{background:var(--chip);border:1px solid var(--border);color:var(--txt);padding:7px 13px;border-radius:20px;font-size:.85rem}
+  .tabs button.active{background:var(--accent);color:#06203f;border-color:var(--accent);font-weight:700}
+  .tabs button .n{opacity:.7;font-size:.78rem;margin-left:4px}
+  .status{color:var(--muted);font-size:.85rem;margin:10px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin:14px 0 50px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+  .card .poster{aspect-ratio:2/3;background:#0a0e14 center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:#39414d;font-size:.75rem;text-align:center;padding:8px}
+  .card .body{padding:9px 10px 11px;display:flex;flex-direction:column;flex:1}
+  .card .ttl{font-size:.86rem;font-weight:600;line-height:1.25}
+  .card .yr{color:var(--muted);font-size:.76rem;margin:2px 0 8px}
+  .card .acts{margin-top:auto;display:flex;flex-wrap:wrap;gap:5px}
+  .card .acts button{font-size:.72rem;border:1px solid var(--border);background:var(--chip);color:var(--txt);border-radius:7px;padding:4px 7px}
+  .card .acts button.on{background:var(--accent2);color:#04210f;border-color:var(--accent2);font-weight:700}
+  .card .acts button.fav.on{background:var(--warn);color:#3a2d0d;border-color:var(--warn)}
+  .card .rm{color:#f85149;border-color:#5a1d1d!important}
+  footer{padding:24px 0 50px;color:var(--muted);font-size:.82rem;text-align:center;border-top:1px solid var(--border)}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="../index.html">← back to portfolio</a>
+    <h1>🎬 Meu Catálogo de Filmes</h1>
+    <p>Um catálogo estilo Filmow que roda 100% no navegador. Busca uma API pública gratuita de filmes (TMDB) e organiza tudo em quatro listas — <strong>já vi · quero ver · quero rever · favoritos</strong>. Suas listas ficam salvas no seu navegador (localStorage).</p>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="keybar">
+    <input id="apikey" type="password" placeholder="Cole sua TMDB API key (grátis) para habilitar a busca" />
+    <button id="savekey">Salvar key</button>
+    <div class="hint">A busca usa a <a href="https://www.themoviedb.org/settings/api" target="_blank" rel="noopener">TMDB API</a> (chave gratuita). A key fica só no seu navegador. Sem key, suas listas continuam funcionando — só a busca online fica desabilitada.</div>
+  </div>
+
+  <div class="searchbar">
+    <input id="q" placeholder="Buscar um filme… (ex.: Parasita, Cidade de Deus, Interstellar)" />
+    <button id="go">Buscar</button>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button data-view="search" class="active">🔎 Busca</button>
+    <button data-view="seen">✅ Já vi <span class="n" id="n-seen">0</span></button>
+    <button data-view="want">👀 Quero ver <span class="n" id="n-want">0</span></button>
+    <button data-view="rewatch">🔁 Quero rever <span class="n" id="n-rewatch">0</span></button>
+    <button data-view="fav">⭐ Favoritos <span class="n" id="n-fav">0</span></button>
+  </div>
+
+  <div class="status" id="status">Digite uma busca, ou abra uma das suas listas.</div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <div class="wrap">Client-side demo · TMDB as the free public API · your lists stay in your browser · part of <a href="../index.html">@gwillye</a>'s portfolio</div>
+</footer>
+
+<script>
+const LISTS = ['seen','want','rewatch','fav'];
+const LABELS = {seen:'✅ Já vi', want:'👀 Quero ver', rewatch:'🔁 Quero rever', fav:'⭐ Favoritos'};
+const store = JSON.parse(localStorage.getItem('filmow_lists') || '{}');
+LISTS.forEach(l => store[l] = store[l] || {});   // {id: {id,title,year,poster}}
+let apikey = localStorage.getItem('tmdb_key') || '';
+let view = 'search';
+let lastSearch = [];
+
+const $ = s => document.querySelector(s);
+const grid = $('#grid'), status = $('#status');
+$('#apikey').value = apikey;
+
+function save(){ localStorage.setItem('filmow_lists', JSON.stringify(store)); refreshCounts(); }
+function refreshCounts(){ LISTS.forEach(l => $('#n-'+l).textContent = Object.keys(store[l]).length); }
+
+function inList(l, id){ return !!store[l][id]; }
+function toggle(l, movie){
+  if(store[l][movie.id]) delete store[l][movie.id];
+  else store[l][movie.id] = movie;
+  save(); render();
+}
+
+function movieCard(m, fromList){
+  const poster = m.poster
+    ? `<div class="poster" style="background-image:url('${m.poster}')"></div>`
+    : `<div class="poster">sem pôster</div>`;
+  const btns = LISTS.map(l => {
+    const on = inList(l, m.id) ? 'on' : '';
+    const favcls = l==='fav' ? 'fav' : '';
+    const short = {seen:'Já vi', want:'Quero ver', rewatch:'Rever', fav:'★'};
+    return `<button class="${favcls} ${on}" data-l="${l}" data-id="${m.id}">${short[l]}</button>`;
+  }).join('');
+  const rm = fromList ? `<button class="rm" data-rm="${fromList}" data-id="${m.id}">remover</button>` : '';
+  return `<div class="card">${poster}<div class="body">
+    <div class="ttl">${m.title}</div><div class="yr">${m.year||''}</div>
+    <div class="acts">${btns}${rm}</div></div></div>`;
+}
+
+function render(){
+  if(view==='search'){
+    if(!lastSearch.length){ status.textContent = apikey ? 'Digite uma busca acima.' : 'Cole sua TMDB key para buscar — ou abra suas listas.'; grid.innerHTML=''; return; }
+    status.textContent = `${lastSearch.length} resultado(s).`;
+    grid.innerHTML = lastSearch.map(m => movieCard(m, null)).join('');
+  } else {
+    const items = Object.values(store[view]);
+    status.textContent = items.length ? `${LABELS[view]} — ${items.length} filme(s).` : `${LABELS[view]}: vazia ainda. Busque e adicione.`;
+    grid.innerHTML = items.map(m => movieCard(m, view)).join('');
+  }
+  bindCards();
+}
+
+function bindCards(){
+  grid.querySelectorAll('button[data-l]').forEach(b => b.onclick = () => {
+    const id = b.dataset.id;
+    const m = lastSearch.find(x=>x.id==id) || Object.values(store).flatMap(o=>Object.values(o)).find(x=>x.id==id);
+    if(m) toggle(b.dataset.l, m);
+  });
+  grid.querySelectorAll('button[data-rm]').forEach(b => b.onclick = () => { delete store[b.dataset.rm][b.dataset.id]; save(); render(); });
+}
+
+async function search(q){
+  if(!q.trim()) return;
+  if(!apikey){ status.textContent = 'Cole sua TMDB API key (grátis) acima para habilitar a busca.'; return; }
+  status.textContent = 'Buscando…';
+  try{
+    const url = `https://api.themoviedb.org/3/search/movie?api_key=${encodeURIComponent(apikey)}&language=pt-BR&query=${encodeURIComponent(q)}`;
+    const r = await fetch(url);
+    if(!r.ok) throw new Error('HTTP '+r.status+(r.status===401?' — key inválida':''));
+    const data = await r.json();
+    lastSearch = (data.results||[]).map(m => ({
+      id: m.id, title: m.title || m.original_title,
+      year: (m.release_date||'').slice(0,4),
+      poster: m.poster_path ? `https://image.tmdb.org/t/p/w342${m.poster_path}` : ''
+    }));
+    view='search'; setTab('search'); render();
+  }catch(e){ status.textContent = 'Erro na busca: '+e.message; }
+}
+
+function setTab(v){ view=v; document.querySelectorAll('#tabs button').forEach(b=>b.classList.toggle('active', b.dataset.view===v)); }
+
+document.querySelectorAll('#tabs button').forEach(b => b.onclick = () => { setTab(b.dataset.view); render(); });
+$('#go').onclick = () => search($('#q').value);
+$('#q').addEventListener('keydown', e => { if(e.key==='Enter') search($('#q').value); });
+$('#savekey').onclick = () => { apikey = $('#apikey').value.trim(); localStorage.setItem('tmdb_key', apikey); status.textContent = apikey?'Key salva. Pode buscar!':'Key removida.'; };
+
+refreshCounts(); render();
+</script>
+</body>
+</html>
