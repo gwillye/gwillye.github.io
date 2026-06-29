@@ -1,12 +1,14 @@
 # gwillye.github.io
 
-Personal portfolio site — **About Me + Projects hub** — for Gabriel Willye (Data Scientist / AI Engineer).
+This is my personal portfolio site, an "About Me" page plus a hub for my projects. I'm Gabriel Willye, a Data Scientist and AI Engineer, and this is where I point people who want a quick overview of who I am and what I've built.
 
-A single static page (`index.html`, plain HTML/CSS, no build step) served by GitHub Pages at **https://gwillye.github.io**.
+It's a single static page (`index.html`, plain HTML and CSS, no build step) served by GitHub Pages at https://gwillye.github.io.
 
 ## Sections
-- **About me** — profile summary + skills (sourced from LinkedIn).
-- **Projects** — grouped by theme (AI/ML · Data/BI · Web · Academic), each card linking to its repository. Live demos (e.g. the Compass UOL Plotly dashboard) are added as they go online.
+
+- About me: a short profile summary and a list of skills, sourced from my LinkedIn.
+- Projects: grouped by theme (AI/ML, Data/BI, Web, Academic). Each card links to its repository, and live demos (for example the Compass UOL Plotly dashboard) get added as they come online.
 
 ## Editing
-Edit `index.html` directly — all styles are inline. To add a project, copy a `.card` block into the matching `.grid`.
+
+Everything lives in `index.html` and all the styles are inline, so you edit that file directly. To add a project, copy an existing `.card` block into the matching `.grid`.
